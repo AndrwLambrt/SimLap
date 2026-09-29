@@ -102,6 +102,7 @@
   .panel.reverse .copy{order:1;}
   .figure img{
     width:100%;
+    height:auto;
     display:block;
     border-radius:12px;
     border:1px solid var(--panel-border);
@@ -148,7 +149,7 @@
     <div>
       <p class="kicker">Misano World Circuit &mdash; onboard lap</p>
       <h1>One lap, read off the video</h1>
-      <p class="lede">Every number on this page came from a single onboard camera. No sensors, no GPS &mdash; just the speed and lean-angle readout burned into the footage, read frame by frame and turned into data.</p>
+      <p class="lede">Every number on this page came from a single onboard camera. No sensors, no GPS &mdash; just the speed and lean-angle readout burned into the footage, read frame by frame and turned into numbers.</p>
     </div>
     <div class="stat-panel">
       <div class="stat-row">
@@ -167,47 +168,47 @@
   </header>
 
   <section class="intro">
-    <p>The three charts below break the lap down three ways: where the bike went, how fast, and how far over. Together they turn 90 seconds of onboard footage into a picture of what an actual MotoGP lap of Misano looks like.</p>
+    <p>The three charts below break the lap down three ways: where the bike went, how fast, and how far over. Together they turn 90 seconds of onboard footage into a picture of what an actual MotoGP lap looks like.</p>
   </section>
 
   <section class="panel">
     <div class="figure">
-      <img src="track_map_real.png" alt="Misano track map coloured by speed, traced from a reference diagram and draped with the lap's actual speed data">
+      <img src="track_map_real.png" alt="Misano track map coloured by speed, traced from a reference diagram and draped with the lap's actual speed data" width="600" height="600">
     </div>
     <div class="copy">
       <span class="tag track">The track</span>
       <h2>Where the lap happens</h2>
-      <p>This is the real Misano World Circuit &mdash; 4.23&nbsp;km, traced from an official track diagram rather than estimated. The lap's actual speed is draped onto that shape, colour-coded from slow (dark) to fast (bright yellow).</p>
-      <p>The dark patches land exactly on Misano's known tight spots &mdash; Curva del Rio, Variante del Parco, Curva Tramonto &mdash; and the brightest stretch is the long straight up to Curvone, where the bike hits its 306&nbsp;km/h top speed.</p>
+      <p>This is the real Misano World Circuit &mdash; 4.23&nbsp;km, traced from an official track diagram rather than estimated. The lap's actual speed is draped onto that shape, colour-coded from slow (dark) to fast (bright).</p>
+      <p>The dark patches land exactly on Misano's known tight spots &mdash; Curva del Rio, Variante del Parco, Curva Tramonto &mdash; and the brightest stretch is the long straight up to Curvone, where the bike hits its top speed.</p>
     </div>
   </section>
 
   <section class="panel reverse">
     <div class="figure">
-      <img src="speed_vs_lap_time.png" alt="Speed in km/h plotted against lap time, showing repeated acceleration and braking cycles">
+      <img src="speed_vs_lap_time.png" alt="Speed in km/h plotted against lap time, showing repeated acceleration and braking cycles" width="600" height="400">
     </div>
     <div class="copy">
       <span class="tag speed">Speed</span>
       <h2>Fast, then slow, repeat</h2>
-      <p>Every peak is a straight, ridden flat out; every valley is a corner, braked hard for. A MotoGP lap is really a string of these accelerate&ndash;brake cycles &mdash; sixteen of them here, matching Misano's sixteen turns.</p>
+      <p>Every peak is a straight, ridden flat out; every valley is a corner, braked hard for. A MotoGP lap is really a string of these accelerate&ndash;brake cycles &mdash; sixteen of them here, matched to the sixteen corners Misano has.</p>
       <p>The steepest drops are the heaviest braking zones, where the bike sheds well over 150&nbsp;km/h in a couple of seconds before tipping into the next corner.</p>
     </div>
   </section>
 
   <section class="panel">
     <div class="figure">
-      <img src="lean_vs_lap_time.png" alt="Signed lean angle plotted against lap time, positive for right-hand corners and negative for left-hand corners">
+      <img src="lean_vs_lap_time.png" alt="Signed lean angle plotted against lap time, positive for right-hand corners and negative for left-hand corners" width="600" height="400">
     </div>
     <div class="copy">
       <span class="tag lean">Lean angle</span>
       <h2>Which way, and how far over</h2>
-      <p>The onboard readout only ever shows a number &mdash; it doesn't say left or right. That direction was worked out separately from the footage itself, so this chart can show <strong>signed</strong> lean: positive for a right-hander, negative for a left.</p>
-      <p>Misano leans right more often than left &mdash; ten corners to six &mdash; which is exactly what the extra time spent above the zero line shows. Every dip back to zero is the bike standing back up between corners.</p>
+      <p>The onboard readout only ever shows a number &mdash; it doesn't say left or right. That direction was worked out separately from the footage itself, so this chart can show <strong>signed</strong> lean: positive for right, negative for left.</p>
+      <p>Misano leans right more often than left &mdash; ten corners to six &mdash; which is exactly what the extra time spent above the zero line shows. Every dip back to zero is the bike standing back up for the next straight.</p>
     </div>
   </section>
 
   <footer>
-    <p>Speed and lean were read from the onboard video with template matching on the digit overlay, smoothed frame-to-frame, and mapped onto the real circuit shape traced from a reference diagram. Treat exact corner-by-corner numbers as a close reading of the footage rather than sensor-grade telemetry.</p>
+    <p>Speed and lean were read from the onboard video with template matching on the digit overlay, smoothed frame-to-frame, and mapped onto the real circuit shape traced from a reference diagram. Track map made with Folium.</p>
   </footer>
 
 </div>
