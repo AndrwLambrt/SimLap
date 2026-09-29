@@ -90,24 +90,41 @@
   section.intro{padding:40px 0 8px;}
   section.intro p{color:var(--text-dim);font-size:16px;max-width:70ch;}
 
+  /* ---------- Panels: each one can set its own column split ---------- */
   .panel{
+    --fig-col:1.15fr;   /* default image column share */
+    --copy-col:0.85fr;  /* default text column share  */
     display:grid;
-    grid-template-columns:1.15fr 0.85fr;
+    grid-template-columns:var(--fig-col) var(--copy-col);
     gap:40px;
     align-items:center;
     padding:52px 0;
     border-top:1px solid var(--panel-border);
   }
+  .panel.reverse{
+    grid-template-columns:var(--copy-col) var(--fig-col);
+  }
   .panel.reverse .figure{order:2;}
   .panel.reverse .copy{order:1;}
+
+  /* ---------- Figures: each image can set its own size ---------- */
+  .figure{
+    margin:0;
+    min-width:0;          /* lets the grid column shrink properly */
+    display:flex;
+    justify-content:center;
+  }
   .figure img{
-    width:100%;
-    height:auto;
+    width:var(--img-w, 100%);
+    height:var(--img-h, auto);
+    max-width:100%;       /* never overflow its column / the screen */
+    object-fit:contain;   /* if both width & height set, no stretching */
     display:block;
     border-radius:12px;
     border:1px solid var(--panel-border);
     background:var(--panel);
   }
+
   .copy h2{
     font-size:26px;
     font-weight:700;
@@ -171,10 +188,11 @@
     <p>The three charts below break the lap down three ways: where the bike went, how fast, and how far over. Together they turn 90 seconds of onboard footage into a picture of what an actual MotoGP lap looks like.</p>
   </section>
 
-  <section class="panel">
-    <div class="figure">
+  <!-- SIZE CONTROLS: --fig-col / --copy-col on the section, --img-w / --img-h on the figure -->
+  <section class="panel" style="--fig-col:1.15fr; --copy-col:0.85fr;">
+    <figure class="figure" style="--img-w:100%; --img-h:auto;">
       <img src="track_map_real.png" alt="Misano track map coloured by speed, traced from a reference diagram and draped with the lap's actual speed data" width="600" height="600">
-    </div>
+    </figure>
     <div class="copy">
       <span class="tag track">The track</span>
       <h2>Where the lap happens</h2>
@@ -183,10 +201,11 @@
     </div>
   </section>
 
-  <section class="panel reverse">
-    <div class="figure">
+  <!-- SIZE CONTROLS -->
+  <section class="panel reverse" style="--fig-col:1.15fr; --copy-col:0.85fr;">
+    <figure class="figure" style="--img-w:100%; --img-h:auto;">
       <img src="speed_vs_lap_time.png" alt="Speed in km/h plotted against lap time, showing repeated acceleration and braking cycles" width="780" height="520">
-    </div>
+    </figure>
     <div class="copy">
       <span class="tag speed">Speed</span>
       <h2>Fast, then slow, repeat</h2>
@@ -195,10 +214,11 @@
     </div>
   </section>
 
-  <section class="panel">
-    <div class="figure">
+  <!-- SIZE CONTROLS -->
+  <section class="panel" style="--fig-col:1.15fr; --copy-col:0.85fr;">
+    <figure class="figure" style="--img-w:100%; --img-h:auto;">
       <img src="lean_vs_lap_time.png" alt="Signed lean angle plotted against lap time, positive for right-hand corners and negative for left-hand corners" width="1600" height="400">
-    </div>
+    </figure>
     <div class="copy">
       <span class="tag lean">Lean angle</span>
       <h2>Which way, and how far over</h2>
