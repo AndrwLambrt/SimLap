@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>One Lap at Misano</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,12 +27,13 @@
       radial-gradient(ellipse 900px 500px at 15% -10%, rgba(255,90,54,0.10), transparent),
       radial-gradient(ellipse 900px 500px at 85% 0%, rgba(52,192,199,0.08), transparent);
     color:var(--text);
-    font-family:'Inter', sans-serif;
+    font-family:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     line-height:1.6;
     padding-top:env(safe-area-inset-top,0px);
     padding-bottom:env(safe-area-inset-bottom,0px);
   }
-  h1,h2,.stat-num,.kicker{font-family:'Rajdhani', sans-serif;}
+  h1,h2,.stat-num,.kicker{font-family:'Rajdhani', 'Arial Narrow', sans-serif;}
+
   .wrap{max-width:1080px;margin:0 auto;padding:56px 24px 40px;}
 
   header.hero{
@@ -90,35 +91,34 @@
   section.intro{padding:40px 0 8px;}
   section.intro p{color:var(--text-dim);font-size:16px;max-width:70ch;}
 
-  /* ---------- Panels: each one can set its own column split ---------- */
+  /* ---------- Side-by-side panels (square-ish charts) ---------- */
   .panel{
-    --fig-col:1.15fr;   /* default image column share */
-    --copy-col:0.85fr;  /* default text column share  */
+    --fig-col:1.15fr;
+    --copy-col:0.85fr;
     display:grid;
-    grid-template-columns:var(--fig-col) var(--copy-col);
+    grid-template-columns:minmax(0,var(--fig-col)) minmax(0,var(--copy-col));
     gap:40px;
     align-items:center;
     padding:52px 0;
     border-top:1px solid var(--panel-border);
   }
   .panel.reverse{
-    grid-template-columns:var(--copy-col) var(--fig-col);
+    grid-template-columns:minmax(0,var(--copy-col)) minmax(0,var(--fig-col));
   }
   .panel.reverse .figure{order:2;}
   .panel.reverse .copy{order:1;}
 
-  /* ---------- Figures: each image can set its own size ---------- */
   .figure{
     margin:0;
-    min-width:0;          /* lets the grid column shrink properly */
+    min-width:0;
     display:flex;
     justify-content:center;
   }
   .figure img{
     width:var(--img-w, 100%);
     height:var(--img-h, auto);
-    max-width:100%;       /* never overflow its column / the screen */
-    object-fit:contain;   /* if both width & height set, no stretching */
+    max-width:100%;
+    object-fit:contain;
     display:block;
     border-radius:12px;
     border:1px solid var(--panel-border);
@@ -128,10 +128,12 @@
   .copy h2{
     font-size:26px;
     font-weight:700;
+    line-height:1.15;
     margin:0 0 12px;
   }
   .copy p{color:var(--text-dim);font-size:15.5px;margin:0 0 12px;}
   .copy p:last-child{margin-bottom:0;}
+
   .tag{
     display:inline-block;
     font-size:13px;
@@ -144,6 +146,41 @@
   .tag.speed{background:rgba(255,90,54,0.12);color:var(--hot);}
   .tag.lean{background:rgba(52,192,199,0.12);color:var(--cool);}
 
+  /* ---------- Full-width panel (wide charts, e.g. the 4:1 lean trace) ---------- */
+  .panel.wide{
+    grid-template-columns:minmax(0,1fr);
+    gap:28px;
+    align-items:start;
+  }
+  /* Copy sits above the chart: heading on the left, text on the right */
+  .panel.wide .copy{
+    display:grid;
+    grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr);
+    gap:12px 40px;
+    align-items:start;
+  }
+  .panel.wide .copy-head h2{margin-bottom:0;}
+  .panel.wide .copy-body{max-width:62ch;}
+
+  /* Scrolls sideways on narrow screens instead of shrinking the chart to an unreadable strip */
+  .figure.scroll{
+    display:block;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:12px;
+  }
+  .figure.scroll img{
+    width:100%;
+    min-width:var(--img-min-w, 0px);
+    max-width:none;
+  }
+  .scroll-hint{
+    display:none;
+    margin:10px 0 0;
+    color:var(--text-dim);
+    font-size:13px;
+  }
+
   footer{
     border-top:1px solid var(--panel-border);
     padding:36px 0 10px;
@@ -153,9 +190,14 @@
   footer p{max-width:70ch;}
 
   @media (max-width:760px){
+    .wrap{padding:40px 18px 32px;}
     header.hero{grid-template-columns:1fr;}
-    .panel, .panel.reverse{grid-template-columns:1fr;gap:22px;}
+    .panel, .panel.reverse, .panel.wide{grid-template-columns:minmax(0,1fr);gap:22px;padding:40px 0;}
     .panel.reverse .figure, .panel.reverse .copy{order:initial;}
+    .panel.wide .copy{grid-template-columns:minmax(0,1fr);}
+    .panel.wide .copy-head h2{margin-bottom:0;}
+    .figure.scroll{--img-min-w:760px;}
+    .scroll-hint{display:block;}
   }
 </style>
 </head>
@@ -214,16 +256,24 @@
     </div>
   </section>
 
-  <!-- SIZE CONTROLS -->
-  <section class="panel" style="--fig-col:1.15fr; --copy-col:0.85fr;">
-    <figure class="figure" style="--img-w:100%; --img-h:auto;">
-      <img src="lean_vs_lap_time.png" alt="Signed lean angle plotted against lap time, positive for right-hand corners and negative for left-hand corners" width="1600" height="400">
-    </figure>
+  <!-- FULL-WIDTH PANEL: text above, chart spans the whole content width.
+       --img-min-w (set in the mobile media query) is the width below which the chart scrolls sideways. -->
+  <section class="panel wide">
     <div class="copy">
-      <span class="tag lean">Lean angle</span>
-      <h2>Which way, and how far over</h2>
-      <p>The onboard readout only ever shows a number &mdash; it doesn't say left or right. That direction was worked out separately from the footage itself, so this chart can show <strong>signed</strong> lean: positive for right, negative for left.</p>
-      <p>Misano leans right more often than left &mdash; ten corners to six &mdash; which is exactly what the extra time spent above the zero line shows. Every dip back to zero is the bike standing back up for the next straight.</p>
+      <div class="copy-head">
+        <span class="tag lean">Lean angle</span>
+        <h2>Which way, and how far over</h2>
+      </div>
+      <div class="copy-body">
+        <p>The onboard readout only ever shows a number &mdash; it doesn't say left or right. That direction was worked out separately from the footage itself, so this chart can show <strong>signed</strong> lean: positive for right, negative for left.</p>
+        <p>Misano leans right more often than left &mdash; ten corners to six &mdash; which is exactly what the extra time spent above the zero line shows. Every dip back to zero is the bike standing back up for the next straight.</p>
+      </div>
+    </div>
+    <div>
+      <figure class="figure scroll" tabindex="0" aria-label="Lean angle chart, scrollable horizontally on small screens">
+        <img src="lean_vs_lap_time.png" alt="Signed lean angle plotted against lap time, positive for right-hand corners and negative for left-hand corners" width="1600" height="400">
+      </figure>
+      <p class="scroll-hint">Swipe sideways to see the whole lap.</p>
     </div>
   </section>
 
